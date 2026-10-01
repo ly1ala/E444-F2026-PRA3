@@ -1,19 +1,34 @@
 # Import Flask and the template rendering function
 from flask import Flask, render_template
-from datetime import datetime
+# Import the form created in forms.py
+from forms import NameForm
+
 
 # Create a Flask application instance
 app = Flask(__name__)
+# Secret key is required by Flask-WTF to protect forms
+app.config['SECRET_KEY'] = 'hard-to-guess-string'
 
-# Render the home page with the user's name and current time
-@app.route('/')
+# Display and process the name form
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    # Get the current date and time
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-    # Pass the name and current time to the HTML template
+    # Create an instance of the name form
+    form = NameForm()
+
+    # Start with no submitted name
+    name = None
+
+    # Check whether the form was submitted and passed validation
+    if form.validate_on_submit():
+        name = form.name.data
+
+        # Clear the form after submission
+        form.name.data = ''
+
+    # Send the form and submitted name to the HTML template
     return render_template(
         'index.html',
-        name='Shengya (Lyla) Huang',
-        current_time=current_time
+        form=form,
+        name=name
     )
