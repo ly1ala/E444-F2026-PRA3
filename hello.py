@@ -9,3 +9,9 @@ app = Flask(__name__)
 def index():
     # Return a simple HTML heading to the browser
     return '<h1>Hello World!</h1>'
+
+# Define a dynamic route that accepts a username from the URL
+@app.route('/user/<name>')
+def user(name):
+    # Display the username in the webpage
+    return '<h1>Hello, %s!</h1>' % name
