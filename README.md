@@ -14,3 +14,15 @@ Reproduced and modified the Flask template example.
 - Added Bootstrap styling and a navigation bar.
 
 ![Activity 1.3 Screenshot](screenshots/activity1_3.png)
+
+
+## Activity 1.4 - Flask Forms and Validation
+
+Extended the Flask application with a web form and email validation.
+
+- Added a name and email input form using Flask-WTF.
+- Added validation to check for a valid email address.
+- Added an additional check to require a UofT email address.
+- Displayed an error message when a non-UofT email is submitted.
+
+![Activity 1.4 Screenshot](screenshots/activity1_4.png)
