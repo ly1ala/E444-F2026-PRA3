@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flasky Chatbot</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Flasky</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Chatbot</h1>
+
+        <a href="/logout" class="btn btn-danger mb-3">Logout</a>
+
+        <!-- Area for displaying chatbot replies -->
+        <div id="chat-box" class="border rounded p-3 mb-3">
+            <p>Welcome to the chatbot!</p>
+        </div>
+
+        <!-- User message input -->
+        <div class="input-group">
+            <input
+                type="text"
+                id="message"
+                class="form-control"
+                placeholder="Type a message">
+
+            <button
+                class="btn btn-primary"
+                id="send-button">
+                Send
+            </button>
+        </div>
+    </div>
+
+    <script>
+    // Send a message to the Flask chatbot endpoint
+    document.getElementById('send-button').addEventListener('click', function () {
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value;
+
+        // Do nothing if the message is empty
+        if (!message.trim()) {
+            return;
+        }
+
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: message })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const chatBox = document.getElementById('chat-box');
+
+            // Display the user's message
+            chatBox.innerHTML += '<p><strong>You:</strong> ' + message + '</p>';
+
+            // Display the chatbot's reply
+            chatBox.innerHTML += '<p><strong>Bot:</strong> ' + data.reply + '</p>';
+
+            // Clear the input box
+            messageInput.value = '';
+        });
+    });
+</script>
+</body>
+</html>
