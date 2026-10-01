@@ -1,17 +1,19 @@
-# Import the Flask class from the flask package
-from flask import Flask
+# Import Flask and the template rendering function
+from flask import Flask, render_template
+from datetime import datetime
 
 # Create a Flask application instance
 app = Flask(__name__)
 
-# Define the route for the home page
+# Render the home page with the user's name and current time
 @app.route('/')
 def index():
-    # Return a simple HTML heading to the browser
-    return '<h1>Hello World!</h1>'
+    # Get the current date and time
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-# Define a dynamic route that accepts a username from the URL
-@app.route('/user/<name>')
-def user(name):
-    # Display the username in the webpage
-    return '<h1>Hello, %s!</h1>' % name
+    # Pass the name and current time to the HTML template
+    return render_template(
+        'index.html',
+        name='Shengya (Lyla) Huang',
+        current_time=current_time
+    )
